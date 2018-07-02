@@ -1,0 +1,37 @@
+{
+  "name": "mws-restaurant-stage-1",
+  "version": "1.0.0",
+  "description": "Udacity google MWS project",
+  "main": "main.js",
+  "dependencies": {
+    "browser-sync": "^2.24.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "npm": "^6.0.0",
+    "uglify-es": "^3.3.9"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CHA0S14/MWS_Google.git"
+  },
+  "keywords": [
+    "Google",
+    "Udacity",
+    "MWS"
+  ],
+  "author": "Ismael Ortega Sánchez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CHA0S14/MWS_Google/issues"
+  },
+  "homepage": "https://github.com/CHA0S14/MWS_Google#readme"
+}
