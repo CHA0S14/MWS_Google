@@ -113,6 +113,12 @@ window.initMap = () => {
     var objectStore = db.createObjectStore("reviews", {
       keyPath: ["restaurant_id", "name", "createdAt", "updatedAt"]
     });
+
+
+    // Se crea un índice para buscar clientespor vecindario..
+    objectStore.createIndex("restaurant_id", "restaurant_id", {
+      unique: false
+    });
   };
 
   const form = document.getElementById('review-form');
@@ -130,6 +136,8 @@ window.initMap = () => {
     var comment = document.getElementsByName('comment')[0].value;
     document.getElementsByName('comment')[0].value = null;
 
+
+    var id = getParameterByName('id');
     var message = {"restaurant_id": parseInt(id), "name": username, "createdAt": Date.now(), "updatedAt": Date.now(), "rating": rating, "comments": comment };
 
     worker.postMessage(message);
@@ -158,8 +166,6 @@ addReview = (message) => {
 
 }
 
-var id;
-
 /**
  * Get current restaurant from page URL.
  */
@@ -168,7 +174,7 @@ fetchRestaurantFromURL = (callback) => {
     callback(null, self.restaurant);
     return;
   }
-  id = getParameterByName('id');
+  var id = getParameterByName('id');
   if (!id) { // no id found in URL
     error = 'No restaurant id in URL'
     callback(error, null);
@@ -190,6 +196,7 @@ fetchReviewsFromURL = (callback) => {
     callback(null, self.review);
     return;
   }
+  var id = getParameterByName('id');
   if (!id) { // no id found in URL
     error = 'No restaurant id in URL'
     callback(error, null);

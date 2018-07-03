@@ -72,7 +72,6 @@ class DBHelper {
             };
           }
         }
-
         callback(null, response);
       })
       .catch((e) => {
@@ -114,28 +113,41 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchReviewRestaurantById(id, callback) {
+
     var url = DBHelper.REVIEW_URL + `${id}`;
     if (DBHelper.db2 !== undefined) {
       var transaction = DBHelper.db2.transaction(["reviews"]);
-      var objectStore = transaction.objectStore("reviews");
-      var request = objectStore.get(id);
+      var index = transaction.objectStore("reviews").index("restaurant_id");
+      var request = index.getAll(parseInt(id));
 
       request.onsuccess = function(event) {
         if(request.result === undefined){
           callback("No restaurant found", null);
         }else{
+          var cacheReviews = request.result;
           callback(null, request.result);
+
+          // Request to api to update indexedDB
+          DBHelper.getReviewsFromApi(url, (error, response) => {
+
+            var worker = new Worker("./js/updateApiWorker.js");
+            var message = [cacheReviews, response];
+
+            worker.postMessage(message);
+
+            if(!request.result)
+              callback(error,response);
+          });
         }
 
       };
 
       request.onerror = function(event) {
+        // Request to api to update indexedDB
+        DBHelper.getReviewsFromApi(url, callback);
       }
     }
 
-
-    // Request to api to update indexedDB
-    DBHelper.getReviewsFromApi(url, callback);
   }
 
   /**

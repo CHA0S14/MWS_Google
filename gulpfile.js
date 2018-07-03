@@ -33,7 +33,7 @@ gulp.task('scripts', (done) => {
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/sw.js', 'js/postWorker.js'])
+	gulp.src(['js/sw.js', 'js/postWorker.js', 'js/updateApiWorker.js'])
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
@@ -54,7 +54,7 @@ gulp.task('scripts-dist', (done) => {
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/sw.js', 'js/postWorker.js'])
+	gulp.src(['js/sw.js', 'js/postWorker.js', 'js/updateApiWorker.js'])
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
