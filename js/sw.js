@@ -7,12 +7,13 @@ var allCaches = [staticCacheName, contentImgsCache];
 
 self.addEventListener('install', function (event) {
   event.waitUntil(caches.open(staticCacheName).then(function (cache) {
-
     return cache.addAll([
       '/', 
       '/restaurant.html',
       '/js/all_main.js', 
       '/js/all_restaurant.js',
+      '/js/postWorker.js',
+      '/js/updateApiWorker.js',
       '/css/styles.css']);
   }));
 });
@@ -22,18 +23,15 @@ self.addEventListener('activate', function (event) {
     return Promise.all(cacheNames.filter(function (cacheName) {
       return cacheName.startsWith('restaurant-') && !allCaches.includes(cacheName);
     }).map(function (cacheName) {
-      return caches['delete'](cacheName);
+      return caches.delete(cacheName);
     }));
   }));
 });
 
 self.addEventListener('fetch', function (event) { 
   var requestUrl = new URL(event.request.url);
+
   if (requestUrl.origin === location.origin) {
-    if (requestUrl.pathname === '/') {
-      event.respondWith(caches.match('/'));
-      return;
-    }
     if (requestUrl.pathname.startsWith('/img/')){
       return caches.open(contentImgsCache).then(function (cache) {
         return cache.match(storageUrl).then(function (response) {
@@ -47,6 +45,7 @@ self.addEventListener('fetch', function (event) {
       });
     }
   }
+  
 
   event.respondWith(caches.match(event.request).then(function (response) {
     return response || fetch(event.request);

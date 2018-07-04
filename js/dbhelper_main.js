@@ -51,16 +51,22 @@ class DBHelper {
 
           if (Array.isArray(response)) {
             for (var i in response) {
+
               var request = objectStore.put(response[i]);
+
               request.onerror = () => {
                 console.log("Couldnt be added")
               };
+              
             }
           } else {
+              
             var request = objectStore.put(response);
+
             request.onerror = () => {
               console.log("Couldnt be added")
             };
+            
           }
         }
 
@@ -89,15 +95,18 @@ class DBHelper {
           callback(null, request.result);
         }
 
+        // Request to api to update indexedDB
+        DBHelper.getFromApi(url, callback);
       };
 
       request.onerror = function(event) {
+        // Request to api to update indexedDB
+        DBHelper.getFromApi(url, callback);
       }
+    } else{
+      // Request to api to update indexedDB
+      DBHelper.getFromApi(url, callback);
     }
-
-
-    // Request to api to update indexedDB
-    DBHelper.getFromApi(url, callback);
   }
 
   /**
