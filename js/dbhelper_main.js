@@ -37,7 +37,7 @@ class DBHelper {
 
           worker.postMessage(message);
 
-          if(request.result.lenght === 0)
+          if(request.result.length === 0)
             DBHelper.getFromApi(DBHelper.DATABASE_URL, callback);
 
           if(!request.result){
