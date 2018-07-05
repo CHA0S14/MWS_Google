@@ -21,43 +21,53 @@ gulp.task('default', (done) => {
 });
 
 gulp.task('scripts', (done) => {
-	gulp.src(['js/dbhelper.js', 'js/main.js'])
+	gulp.src(['js/dbhelper.js', 'js/main.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_main.js'))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/dbhelper_restaurant.js', 'js/restaurant_info.js'])
+	gulp.src(['js/dbhelper_restaurant.js', 'js/restaurant_info.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_restaurant.js'))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/sw.js', 'js/postWorker.js', 'js/updateApiWorker.js', 'js/swRegister.js'])
+	gulp.src(['js/postWorker.js', 'js/putWorker.js', 'js/updaterReviewApiWorker.js', 'js/updaterFavApiWorker.js'])
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
+
+	gulp.src('js/sw.js')
+		.pipe(sourcemaps.init())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('dist'));
 
 	done();
 });
 
 gulp.task('scripts-dist', (done) => {
-	gulp.src(['js/dbhelper_main.js', 'js/main.js'])
+	gulp.src(['js/dbhelper_main.js', 'js/main.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_main.js'))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/dbhelper_restaurant.js', 'js/restaurant_info.js'])
+	gulp.src(['js/dbhelper_restaurant.js', 'js/restaurant_info.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_restaurant.js'))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/sw.js', 'js/postWorker.js', 'js/updateApiWorker.js', 'js/swRegister.js'])
+	gulp.src(['js/postWorker.js', 'js/putWorker.js', 'js/updaterReviewApiWorker.js', 'js/updaterFavApiWorker.js'])
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
+
+	gulp.src('js/sw.js')
+		.pipe(sourcemaps.init())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('dist'));
 
 	done();
 });

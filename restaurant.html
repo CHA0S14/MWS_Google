@@ -56,10 +56,10 @@
     <section id="reviews-container">
       <h3>Reviews</h3>      
       <div class="flex-container review-form">                 
-          <input class="username" type="text" name="username" placeholder="Username" aria-label="Your username"><br>
+          <input class="username" type="text" name="username" placeholder="Username" aria-label="Your username" role=""><br>
           <input class="rating" type="number" name="rating" placeholder="Rating" aria-label="Your personal rating of the restaurant" min="1" max="10"><br>
           <textarea name="comment" placeholder="Comment" aria-label="Comment of the restaurant"></textarea>
-          <a href="#" id="review-form">Enviar</a>
+          <a href="#" id="review-form" arial-label="Send Comment">Enviar</a>
       </div>
       <ul id="reviews-list" class="flex-container"></ul>
     </section>
@@ -79,7 +79,6 @@
   <!-- Beginning scripts -->
   <!-- Database helpers -->
   <script type="application/javascript" charset="utf-8" src="js/all_restaurant.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/swRegister.js"></script>
   <!-- Google Maps -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_smfQBK1Xa8cOSnmKIawa_TsuxC_hj9k&libraries=places&callback=initMap"></script>
   <!-- End scripts -->

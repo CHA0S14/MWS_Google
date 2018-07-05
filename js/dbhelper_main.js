@@ -25,10 +25,25 @@ class DBHelper {
       var request = objectStore.getAll();
 
       request.onsuccess = function(event) {
-        callback(null, request.result);
+        var cacheReviews = request.result;
 
-        // Request to api to update indexedDB
-        DBHelper.getFromApi(DBHelper.DATABASE_URL, callback);
+        var restaurantData = fetch(DBHelper.DATABASE_URL)
+        .then((response) => response.json())
+        .then((response) => {
+
+
+          var worker = new Worker("./js/updaterFavApiWorker.js");
+          var message = [cacheReviews, response];
+
+          worker.postMessage(message);
+
+          if(request.result.lenght === 0)
+            DBHelper.getFromApi(DBHelper.DATABASE_URL, callback);
+
+          if(!request.result){
+            callback(error,response);
+          }
+        });
       };
 
       request.onerror = function(event) {
@@ -51,8 +66,9 @@ class DBHelper {
 
           if (Array.isArray(response)) {
             for (var i in response) {
-
+              response[i].is_favorite = response[i].is_favorite + "";
               var request = objectStore.put(response[i]);
+
 
               request.onerror = () => {
                 console.log("Couldnt be added")
@@ -60,7 +76,7 @@ class DBHelper {
               
             }
           } else {
-              
+            response.is_favorite = response.is_favorite + "";
             var request = objectStore.put(response);
 
             request.onerror = () => {

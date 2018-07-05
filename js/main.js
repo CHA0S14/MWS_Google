@@ -99,6 +99,10 @@ window.initMap = () => {
   request.onsuccess = function(event) {
     DBHelper.db = request.result;
 
+    updateRestaurants();
+
+    registerSW();
+
     DBHelper.db.onerror = function(event) {
       // Generic error handler for all errors targeted at this database's
       // requests!
@@ -129,35 +133,6 @@ window.initMap = () => {
     // Se crea un índice para buscar clientespor vecindario..
     objectStore.createIndex("neighborhood-cuisine_type", ["neighborhood", "cuisine_type"], {
       unique: false
-    });
-  };
-
-   // dejamos abierta nuestra base de datos
-  let request2 = window.indexedDB.open("favourites", 1);
-
-  request2.onerror = function(event) {
-    alert("Why didn't you allow my web app to use IndexedDB?!");
-  };
-  request2.onsuccess = function(event) {
-    DBHelper.db2 = request2.result;
-
-    updateRestaurants();
-
-    DBHelper.db2.onerror = function(event) {
-      // Generic error handler for all errors targeted at this database's
-      // requests!
-      alert("Database error: " + event.target.errorCode);
-    };
-  };
-
-  // Este evento solamente está implementado en navegadores recientes
-  request2.onupgradeneeded = function(event) {
-    var db = event.target.result;
-
-    // Se crea un almacén para contener la información de nuestros cliente
-    // Se usará "ssn" como clave ya que es garantizado que es única
-    var objectStore = db.createObjectStore("favourites", {
-      keyPath: "restaurant_id"
     });
   };
 }
@@ -224,7 +199,7 @@ createRestaurantHTML = (restaurant) => {
   image.alt = restaurant.name + '\'s image';
   li.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h3');
   name.innerHTML = restaurant.name;
   li.append(name);
 
@@ -245,28 +220,12 @@ createRestaurantHTML = (restaurant) => {
   const fav = document.createElement('a');
   fav.id = restaurant.id;
 
-  var transaction = DBHelper.db2.transaction(["favourites"], "readwrite");
-  var objectStore = transaction.objectStore("favourites");
-  var id = parseInt(restaurant.id);
-  var request = objectStore.get(id);
-
-  request.onsuccess = function(event) {
-    if(request.result === undefined){
-      fav.innerHTML = '☆';
-      objectStore.put({"restaurant_id":id, "fav":false});
-    }else{
-      if (!request.result.fav){
-        fav.innerHTML = '☆';
-      }else{
-        fav.innerHTML = '★';
-      }
-    }
-  };
-    
-  request.onerror = function(event) {
-    console.log(request.result);
+  if (!restaurant.is_favorite || restaurant.is_favorite==="false"){
     fav.innerHTML = '☆';
+  }else{
+    fav.innerHTML = '★';
   }
+
 
   fav.className="fav";
   fav.href = "#";
@@ -275,33 +234,26 @@ createRestaurantHTML = (restaurant) => {
     e.preventDefault();
 
     
-    var transaction = DBHelper.db2.transaction(["favourites"], "readwrite");
-    var objectStore = transaction.objectStore("favourites");
+    var transaction = DBHelper.db.transaction(["restaurants"], "readwrite");
+    var objectStore = transaction.objectStore("restaurants");
     var id = parseInt(fav.id);
-    console.log(id);
-    var request = objectStore.get(id);
 
-    request.onsuccess = function(event) {
-      if(request.result === undefined){
-        fav.innerHTML = '☆';
-        objectStore.put({"restaurant_id":id, "fav":false});
-      }else{
-        if (fav.innerHTML === '★'){
-          fav.innerHTML = '☆';
-          request.result.fav=false;
-          objectStore.put(request.result);
-        }else{
-          request.result.fav=true;
-          fav.innerHTML = '★';
-          objectStore.put(request.result);
-        }
-      }
-    };
-      
-    request.onerror = function(event) {
-      console.log(request.result);
+    if (fav.innerHTML === '★'){
       fav.innerHTML = '☆';
+      restaurant.is_favorite = false;
+      objectStore.put(restaurant);
+
+    }else{
+      fav.innerHTML = '★';
+      restaurant.is_favorite = true;
+      objectStore.put(restaurant);
     }
+
+    var worker = new Worker("./js/putWorker.js");
+
+    var message = [id, restaurant.is_favorite];
+
+    worker.postMessage(message);
     
   });
 

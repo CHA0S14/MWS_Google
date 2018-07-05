@@ -123,6 +123,8 @@ class DBHelper {
       request.onsuccess = function(event) {
         if(request.result === undefined){
           callback("No restaurant found", null);
+          // Request to api to update indexedDB
+          DBHelper.getFromApi(url, callback);
         }else{
           var cacheReviews = request.result;
           callback(null, request.result);
@@ -130,7 +132,7 @@ class DBHelper {
           // Request to api to update indexedDB
           DBHelper.getReviewsFromApi(url, (error, response) => {
 
-            var worker = new Worker("./js/updateApiWorker.js");
+            var worker = new Worker("./js/updaterReviewApiWorker.js");
             var message = [cacheReviews, response];
 
             worker.postMessage(message);

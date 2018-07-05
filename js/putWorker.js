@@ -1,13 +1,11 @@
 this.onmessage = function(e) {
-	fetch("http://localhost:1337/reviews/",
+	fetch("http://localhost:1337/restaurants/" + e.data[0] + "?is_favorite=" + e.data[1]==="true",
 	{
 	    headers: {
 	      'Accept': 'application/json',
 	      'Content-Type': 'application/json'
 	    },
-	    method: "POST",
-	    body: JSON.stringify(e.data)
+	    method: "PUT"
 	})
-	.then(function(res){})
 	.catch(function(res){ console.log(res) })
 }

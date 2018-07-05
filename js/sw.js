@@ -13,7 +13,9 @@ self.addEventListener('install', function (event) {
       '/js/all_main.js', 
       '/js/all_restaurant.js',
       '/js/postWorker.js',
-      '/js/updateApiWorker.js',
+      '/js/putWorker.js',
+      '/js/updaterFavApiWorker.js',
+      '/js/updaterReviewApiWorker.js',
       '/css/styles.css']);
   }));
 });
@@ -33,23 +35,25 @@ self.addEventListener('fetch', function (event) {
 
   if (requestUrl.origin === location.origin) {
     if (requestUrl.pathname.startsWith('/img/')){
-      return caches.open(contentImgsCache).then(function (cache) {
-        return cache.match(storageUrl).then(function (response) {
-          var networkFetch = fetch(request).then(function (networkResponse) {
-            cache.put(storageUrl, networkResponse.clone());
+      event.respondWith(caches.open(contentImgsCache).then(function (cache) {
+        return cache.match(requestUrl).then(function (response) {
+          if (response) return response;
+
+          var networkFetch = fetch(event.request).then(function (networkResponse) {
+            cache.put(requestUrl, networkResponse.clone());
             return networkResponse;
           });
-    
-          return response || networkFetch;
         });
-      });
+      }).catch((error) => {
+        console.log(error);
+      }));
+    }else{
+      event.respondWith(caches.match(event.request).then(function (response) {
+        return response || fetch(event.request);
+      }));
     }
   }
   
-
-  event.respondWith(caches.match(event.request).then(function (response) {
-    return response || fetch(event.request);
-  }));
 });
 
 self.addEventListener('message', function (event) {
