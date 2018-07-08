@@ -40,9 +40,7 @@ class DBHelper {
           if(request.result.length === 0)
             DBHelper.getFromApi(DBHelper.DATABASE_URL, callback);
 
-          if(!request.result){
-            callback(error,response);
-          }
+          callback(null,response);
         });
       };
 

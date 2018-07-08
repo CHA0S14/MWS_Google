@@ -15,7 +15,11 @@ gulp.task('default', (done) => {
 	gulp.watch('./dist/index.html').on('change', browserSync.reload);
 
 	browserSync.init({
-		server: './dist'
+		server: './dist',
+		https: {
+	        key: "./cert/server.key",
+		    cert: "./cert/server.cer"
+	    }
 	});
 	done();
 });

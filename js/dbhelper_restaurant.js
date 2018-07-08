@@ -88,7 +88,7 @@ class DBHelper {
     if (DBHelper.db !== undefined) {
       var transaction = DBHelper.db.transaction(["restaurants"]);
       var objectStore = transaction.objectStore("restaurants");
-      var request = objectStore.get(id);
+      var request = objectStore.get(parseInt(id));
 
       request.onsuccess = function(event) {
 
