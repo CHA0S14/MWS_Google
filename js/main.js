@@ -9,7 +9,6 @@ var markers = [];
  */
 document.addEventListener('DOMContentLoaded', (event) => {
 
-
   fetchNeighborhoods();
   fetchCuisines();
 
@@ -135,6 +134,18 @@ window.initMap = () => {
       unique: false
     });
   };
+
+
+  document.getElementById('show-map-link').addEventListener("click",(e) => {
+    e.preventDefault();
+    if (e.target.innerHTML === "Show Map"){
+      document.getElementById('map').style.display = "block";
+      e.target.innerHTML = "Hidde Map";
+    }else{
+      document.getElementById('map').style.display = "none";
+      e.target.innerHTML = "Show Map";
+    }
+  });
 }
 
 /**
@@ -184,6 +195,9 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
+
+  myLazyLoad.update();
+
   addMarkersToMap();
 }
 
@@ -194,8 +208,8 @@ createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
   const image = document.createElement('img');
-  image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.className = 'restaurant-img lazy';
+  image.setAttribute("data-src", DBHelper.imageUrlForRestaurant(restaurant));
   image.alt = restaurant.name + '\'s image';
   li.append(image);
 

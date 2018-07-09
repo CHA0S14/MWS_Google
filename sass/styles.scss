@@ -155,11 +155,37 @@ nav {
 }
 
 /* ====================== Map ====================== */
-#map {
-    height: 400px;
+#map-container{
     width: 100%;
-    background-color: #ccc;
+ 
+    #map {
+        display:none;
+        height: 400px;
+        width: 100%;
+        background-color: #ccc;
+    }
+
+    #show-map{
+        width:100%;
+        justify-content: center;
+
+        a {
+            width: 100%;
+            background-color: #3397DB;
+            border-bottom: 3px solid #eee;
+            color: #fff;
+            display: inline-block;
+            font-size: 10pt;
+            margin: 5px auto 5px auto;
+            padding: 8px 30px 10px;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+    }
 }
+
+
 
 /* ====================== Restaurant Filtering ====================== */
 
@@ -559,14 +585,18 @@ nav {
 
 @media screen and (min-width:901px) {
     #restaurant-container {
-        width: calc(50% - 20px);
+        width: 100%;
         margin-left: 20px;
         order: -1;
     }
 
     #restaurant-data {
-        width: 90%;
-        margin: auto;
+        width: calc(50% - 20px);
+        margin-left: 5px;
+    }
+
+    #restaurant-photo-container {
+        width: 50%;
     }
 
     .map-container {

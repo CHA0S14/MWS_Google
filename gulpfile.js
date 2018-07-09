@@ -6,7 +6,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglifyes = require('uglify-es');
 const composer = require('gulp-uglify/composer');
 const uglify = composer(uglifyes, console);
+const styleInject = require("gulp-style-inject");
 const browserSync = require('browser-sync').create();
+const webp = require('gulp-webp');
 
 gulp.task('default', (done) => {
 	gulp.watch('sass/**/*.scss', ['styles']);
@@ -28,22 +30,26 @@ gulp.task('scripts', (done) => {
 	gulp.src(['js/dbhelper.js', 'js/main.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_main.js'))
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
 	gulp.src(['js/dbhelper_restaurant.js', 'js/restaurant_info.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_restaurant.js'))
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/postWorker.js', 'js/putWorker.js', 'js/updaterReviewApiWorker.js', 'js/updaterFavApiWorker.js'])
+	gulp.src(['js/postWorker.js', 'js/putWorker.js', 'js/updaterReviewApiWorker.js', 'js/updaterFavApiWorker.js', 'js/lazyload.js'])
 		.pipe(sourcemaps.init())
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
 	gulp.src('js/sw.js')
 		.pipe(sourcemaps.init())
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist'));
 
@@ -54,22 +60,26 @@ gulp.task('scripts-dist', (done) => {
 	gulp.src(['js/dbhelper_main.js', 'js/main.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_main.js'))
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
 	gulp.src(['js/dbhelper_restaurant.js', 'js/restaurant_info.js', 'js/swRegister.js'])
 		.pipe(sourcemaps.init())
 		.pipe(concat('all_restaurant.js'))
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
-	gulp.src(['js/postWorker.js', 'js/putWorker.js', 'js/updaterReviewApiWorker.js', 'js/updaterFavApiWorker.js'])
+	gulp.src(['js/postWorker.js', 'js/putWorker.js', 'js/updaterReviewApiWorker.js', 'js/updaterFavApiWorker.js', 'js/lazyload.js'])
 		.pipe(sourcemaps.init())
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 
 	gulp.src('js/sw.js')
 		.pipe(sourcemaps.init())
+		.pipe(uglify())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist'));
 
@@ -93,12 +103,14 @@ gulp.task('styles', (done) => {
 
 gulp.task('copy-html', (done) => {
 	gulp.src('./*.html')
+		.pipe(styleInject())
 		.pipe(gulp.dest('./dist'));
 	done();
 });
 
 gulp.task('copy-images', (done) => {
 	gulp.src('img/*')
+        .pipe(webp())
 		.pipe(gulp.dest('dist/img'));
 	done();
 });

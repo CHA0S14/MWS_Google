@@ -145,6 +145,20 @@ window.initMap = () => {
     addReview(message);
 
   });
+
+  
+
+
+  document.getElementById('show-map-link').addEventListener("click",(e) => {
+    e.preventDefault();
+    if (e.target.innerHTML === "Show Map"){
+      document.getElementById('map').style.display = "block";
+      e.target.innerHTML = "Hidde Map";
+    }else{
+      document.getElementById('map').style.display = "none";
+      e.target.innerHTML = "Show Map";
+    }
+  });
 }
 
 addReview = (message) => {

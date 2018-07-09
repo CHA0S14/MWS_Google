@@ -35,7 +35,10 @@
     <!-- Beginning map -->
     <div id="restaurant-map-container" class="flex-container">
       <section id="map-container" class="map-container" role="application" aria-hidden="true">
-        <div id="map" class="map"></div>
+        <div id="map"></div>
+        <div id="show-map" class="flex-container">
+          <a href="#" id="show-map-link">Show Map</a>
+        </div>
       </section>
       <!-- End map -->
       <!-- Beginning restaurant -->
@@ -55,9 +58,21 @@
     <!-- Beginning reviews -->
     <section id="reviews-container">
       <h3>Reviews</h3>      
-      <div class="flex-container review-form">                 
+      <div class="flex-container review-form" role="form">                 
           <input class="username" type="text" name="username" placeholder="Username" aria-label="Your username" role=""><br>
-          <input class="rating" type="number" name="rating" placeholder="Rating" aria-label="Your personal rating of the restaurant" min="1" max="10"><br>
+          <select class="rating" name="rating" placeholder="Rating" aria-label="Your personal rating of the restaurant">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select><br>
           <textarea name="comment" placeholder="Comment" aria-label="Comment of the restaurant"></textarea>
           <a href="#" id="review-form" arial-label="Send Comment">Enviar</a>
       </div>

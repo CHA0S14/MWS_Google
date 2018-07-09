@@ -2,15 +2,17 @@
 <html lang="en">
 
 <head>
+  <link rel="manifest" href="/manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#252831">
-  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />  
+  <link rel="preload" href="js/updaterFavApiWorker.js" as="script"/>
+  <!-- inject-style src="dist/css/styles.css" -->
   <title>Restaurant Reviews</title>
 </head>
 
 <body>
+  <noscript>Your browser does not support JavaScript!</noscript>
   <header>
     <nav>
       <h1><a href="/">Restaurant Reviews</a></h1>
@@ -20,6 +22,9 @@
   <main id="maincontent">
     <section id="map-container" role="application" aria-hidden="true">
       <div id="map"></div>
+      <div id="show-map" class="flex-container">
+        <a href="#" id="show-map-link">Show Map</a>
+      </div>
     </section>
     <section>
       <div class="filter-options flex-container">
@@ -38,7 +43,13 @@
 
   
   <script type="application/javascript" charset="utf-8" src="js/all_main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/10.9.0/lazyload.min.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmT86d4ZPFr6W9hN0GEvnj0lfVRHgiBME&libraries=places&callback=initMap"></script>
+  <script>
+    var myLazyLoad = new LazyLoad({
+      elements_selector: ".lazy"
+    });
+  </script>
 
 
   <footer id="footer">

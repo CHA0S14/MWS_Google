@@ -1,25 +1,2 @@
-this.onmessage = function(e) {
-	var cacheReviews = e.data[0];
-	var apiReviews = e.data[1];
-
-	cacheReviews.forEach((element) => {
-		for(var j = 0; j < apiReviews.length; j++){
-			if (element.id === apiReviews[j].id && element.is_favorite!==apiReviews[j].is_favorite){
-
-				fetch("http://localhost:1337/restaurants/" + element.id + "?is_favorite=" + element.is_favorite,
-				{
-				    headers: {
-				      'Accept': 'application/json',
-				      'Content-Type': 'application/json'
-				    },
-				    method: "PUT"
-				}).catch(function(res){ console.log(res) })
-
-			}
-		}	
-	});
-
-	console.log(apiReviews);
-	console.log(cacheReviews);
-}
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1cGRhdGVyRmF2QXBpV29ya2VyLmpzIl0sInNvdXJjZXNDb250ZW50IjpbInRoaXMub25tZXNzYWdlID0gZnVuY3Rpb24oZSkge1xyXG5cdHZhciBjYWNoZVJldmlld3MgPSBlLmRhdGFbMF07XHJcblx0dmFyIGFwaVJldmlld3MgPSBlLmRhdGFbMV07XHJcblxyXG5cdGNhY2hlUmV2aWV3cy5mb3JFYWNoKChlbGVtZW50KSA9PiB7XHJcblx0XHRmb3IodmFyIGogPSAwOyBqIDwgYXBpUmV2aWV3cy5sZW5ndGg7IGorKyl7XHJcblx0XHRcdGlmIChlbGVtZW50LmlkID09PSBhcGlSZXZpZXdzW2pdLmlkICYmIGVsZW1lbnQuaXNfZmF2b3JpdGUhPT1hcGlSZXZpZXdzW2pdLmlzX2Zhdm9yaXRlKXtcclxuXHJcblx0XHRcdFx0ZmV0Y2goXCJodHRwOi8vbG9jYWxob3N0OjEzMzcvcmVzdGF1cmFudHMvXCIgKyBlbGVtZW50LmlkICsgXCI/aXNfZmF2b3JpdGU9XCIgKyBlbGVtZW50LmlzX2Zhdm9yaXRlLFxyXG5cdFx0XHRcdHtcclxuXHRcdFx0XHQgICAgaGVhZGVyczoge1xyXG5cdFx0XHRcdCAgICAgICdBY2NlcHQnOiAnYXBwbGljYXRpb24vanNvbicsXHJcblx0XHRcdFx0ICAgICAgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi9qc29uJ1xyXG5cdFx0XHRcdCAgICB9LFxyXG5cdFx0XHRcdCAgICBtZXRob2Q6IFwiUFVUXCJcclxuXHRcdFx0XHR9KS5jYXRjaChmdW5jdGlvbihyZXMpeyBjb25zb2xlLmxvZyhyZXMpIH0pXHJcblxyXG5cdFx0XHR9XHJcblx0XHR9XHRcclxuXHR9KTtcclxuXHJcblx0Y29uc29sZS5sb2coYXBpUmV2aWV3cyk7XHJcblx0Y29uc29sZS5sb2coY2FjaGVSZXZpZXdzKTtcclxufSJdLCJmaWxlIjoidXBkYXRlckZhdkFwaVdvcmtlci5qcyJ9
+this.onmessage=function(o){var t=o.data[0],a=o.data[1];t.forEach(o=>{for(var t=0;t<a.length;t++)o.id===a[t].id&&o.is_favorite!==a[t].is_favorite&&fetch("http://localhost:1337/restaurants/"+o.id+"?is_favorite="+o.is_favorite,{headers:{Accept:"application/json","Content-Type":"application/json"},method:"PUT"}).catch(function(o){console.log(o)})}),console.log(a),console.log(t)};
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVwZGF0ZXJGYXZBcGlXb3JrZXIuanMiXSwibmFtZXMiOlsidGhpcyIsIm9ubWVzc2FnZSIsImUiLCJjYWNoZVJldmlld3MiLCJkYXRhIiwiYXBpUmV2aWV3cyIsImZvckVhY2giLCJlbGVtZW50IiwiaiIsImxlbmd0aCIsImlkIiwiaXNfZmF2b3JpdGUiLCJmZXRjaCIsImhlYWRlcnMiLCJBY2NlcHQiLCJDb250ZW50LVR5cGUiLCJtZXRob2QiLCJjYXRjaCIsInJlcyIsImNvbnNvbGUiLCJsb2ciXSwibWFwcGluZ3MiOiJBQUFBQSxLQUFLQyxVQUFZLFNBQVNDLEdBQ3pCLElBQUlDLEVBQWVELEVBQUVFLEtBQUssR0FDdEJDLEVBQWFILEVBQUVFLEtBQUssR0FFeEJELEVBQWFHLFFBQVNDLElBQ3JCLElBQUksSUFBSUMsRUFBSSxFQUFHQSxFQUFJSCxFQUFXSSxPQUFRRCxJQUNqQ0QsRUFBUUcsS0FBT0wsRUFBV0csR0FBR0UsSUFBTUgsRUFBUUksY0FBY04sRUFBV0csR0FBR0csYUFFMUVDLE1BQU0scUNBQXVDTCxFQUFRRyxHQUFLLGdCQUFrQkgsRUFBUUksYUFFaEZFLFNBQ0VDLE9BQVUsbUJBQ1ZDLGVBQWdCLG9CQUVsQkMsT0FBUSxRQUNUQyxNQUFNLFNBQVNDLEdBQU1DLFFBQVFDLElBQUlGLE9BTXZDQyxRQUFRQyxJQUFJZixHQUNaYyxRQUFRQyxJQUFJakIiLCJmaWxlIjoidXBkYXRlckZhdkFwaVdvcmtlci5qcyIsInNvdXJjZXNDb250ZW50IjpbInRoaXMub25tZXNzYWdlID0gZnVuY3Rpb24oZSkge1xyXG5cdHZhciBjYWNoZVJldmlld3MgPSBlLmRhdGFbMF07XHJcblx0dmFyIGFwaVJldmlld3MgPSBlLmRhdGFbMV07XHJcblxyXG5cdGNhY2hlUmV2aWV3cy5mb3JFYWNoKChlbGVtZW50KSA9PiB7XHJcblx0XHRmb3IodmFyIGogPSAwOyBqIDwgYXBpUmV2aWV3cy5sZW5ndGg7IGorKyl7XHJcblx0XHRcdGlmIChlbGVtZW50LmlkID09PSBhcGlSZXZpZXdzW2pdLmlkICYmIGVsZW1lbnQuaXNfZmF2b3JpdGUhPT1hcGlSZXZpZXdzW2pdLmlzX2Zhdm9yaXRlKXtcclxuXHJcblx0XHRcdFx0ZmV0Y2goXCJodHRwOi8vbG9jYWxob3N0OjEzMzcvcmVzdGF1cmFudHMvXCIgKyBlbGVtZW50LmlkICsgXCI/aXNfZmF2b3JpdGU9XCIgKyBlbGVtZW50LmlzX2Zhdm9yaXRlLFxyXG5cdFx0XHRcdHtcclxuXHRcdFx0XHQgICAgaGVhZGVyczoge1xyXG5cdFx0XHRcdCAgICAgICdBY2NlcHQnOiAnYXBwbGljYXRpb24vanNvbicsXHJcblx0XHRcdFx0ICAgICAgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi9qc29uJ1xyXG5cdFx0XHRcdCAgICB9LFxyXG5cdFx0XHRcdCAgICBtZXRob2Q6IFwiUFVUXCJcclxuXHRcdFx0XHR9KS5jYXRjaChmdW5jdGlvbihyZXMpeyBjb25zb2xlLmxvZyhyZXMpIH0pXHJcblxyXG5cdFx0XHR9XHJcblx0XHR9XHRcclxuXHR9KTtcclxuXHJcblx0Y29uc29sZS5sb2coYXBpUmV2aWV3cyk7XHJcblx0Y29uc29sZS5sb2coY2FjaGVSZXZpZXdzKTtcclxufSJdfQ==
